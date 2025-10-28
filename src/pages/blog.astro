@@ -1,0 +1,90 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/layout/Header.astro";
+
+// Obtener todos los posts (filtrando drafts)
+const allPosts = await getCollection("blog", ({ data }) => {
+    return data.draft !== true;
+});
+
+// Ordenar por fecha (más reciente primero)
+const sortedPosts = allPosts.sort(
+    (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+);
+
+// Función para formatear fecha
+function formatDate(date: Date) {
+    return new Intl.DateTimeFormat("es-ES", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    }).format(date);
+}
+
+// Calcular tiempo de lectura (aprox)
+function getReadingTime(content: string) {
+    const wordsPerMinute = 200;
+    const words = content.trim().split(/\s+/).length;
+    const minutes = Math.ceil(words / wordsPerMinute);
+    return `${minutes} min`;
+}
+---
+
+<BaseLayout
+    title="Blog - Santiago Trigo"
+    description="Artículos sobre React, TypeScript, arquitectura frontend y performance."
+>
+    <Header />
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="max-w-4xl mx-auto">
+            <!-- Posts list -->
+            <div class="space-y-12">
+                {
+                    sortedPosts.map((post) => (
+                        <article class="group">
+                            <a href={`/blog/${post.slug}`} class="block">
+                                {/* Featured badge */}
+                                {post.data.featured && (
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-brand-100 text-brand-700 dark:bg-brand-900/30 dark:text-brand-400 mb-3">
+                                        <svg
+                                            class="w-3.5 h-3.5"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                        </svg>
+                                        Destacado
+                                    </span>
+                                )}
+
+                                {/* Title */}
+                                <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-50 mb-2 group-hover:text-brand-500 dark:group-hover:text-brand-400 transition-colors">
+                                    {post.data.title}
+                                </h2>
+
+                                {/* Description */}
+                                <p class="text-neutral-600 dark:text-neutral-400 mb-4 line-clamp-2">
+                                    {post.data.description}
+                                </p>
+                            </a>
+                        </article>
+                    ))
+                }
+            </div>
+
+            {/* Empty state */}
+            {
+                sortedPosts.length === 0 && (
+                    <div class="text-center py-12">
+                        <p class="text-neutral-600 dark:text-neutral-400">
+                            No hay posts publicados todavía. ¡Pronto habrá
+                            contenido!
+                        </p>
+                    </div>
+                )
+            }
+        </div>
+    </main>
+</BaseLayout>

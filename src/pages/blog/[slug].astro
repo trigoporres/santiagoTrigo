@@ -1,0 +1,121 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+function formatDate(date: Date) {
+  return new Intl.DateTimeFormat('es-ES', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
+}
+
+function getReadingTime(content: string) {
+  const wordsPerMinute = 200;
+  const words = content.trim().split(/\s+/).length;
+  const minutes = Math.ceil(words / wordsPerMinute);
+  return `${minutes} min lectura`;
+}
+---
+
+<BaseLayout 
+  title={`${post.data.title} - Santiago Trigo`}
+  description={post.data.description}
+>
+  <Header />
+  
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <article class="max-w-3xl mx-auto">
+      
+      <!-- Back link -->
+      <a 
+        href="/blog"
+        class="inline-flex items-center gap-2 text-sm text-neutral-600 hover:text-brand-500 dark:text-neutral-400 dark:hover:text-brand-400 mb-8 transition-colors"
+      >
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        Volver al blog
+      </a>
+
+      <!-- Header -->
+      <header class="mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-brand-500 dark:text-brand-400 mb-6">
+          {post.data.title}
+        </h1>
+        
+        <div class="flex flex-wrap items-center gap-4 text-sm text-neutral-500 dark:text-neutral-500 mb-6">
+          <time datetime={post.data.pubDate.toISOString()}>
+            {formatDate(post.data.pubDate)}
+          </time>
+          <span>•</span>
+          <span>{getReadingTime(post.body)}</span>
+        </div>
+
+        {/* Tags */}
+        {post.data.tags.length > 0 && (
+          <div class="flex flex-wrap gap-2">
+            {post.data.tags.map((tag) => (
+              <span class="px-3 py-1 text-sm rounded-full bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </header>
+
+      <!-- Content -->
+      <div class="prose prose-lg dark:prose-invert max-w-none
+        prose-headings:font-bold
+        prose-headings:text-neutral-900
+        dark:prose-headings:text-neutral-50
+        prose-p:text-neutral-600
+        dark:prose-p:text-neutral-400
+        prose-a:text-brand-500
+        prose-a:no-underline
+        hover:prose-a:underline
+        dark:prose-a:text-brand-400
+        prose-strong:text-neutral-900
+        dark:prose-strong:text-neutral-50
+        prose-code:text-brand-600
+        dark:prose-code:text-brand-400
+        prose-code:before:content-['']
+        prose-code:after:content-['']
+        prose-pre:bg-neutral-900
+        dark:prose-pre:bg-neutral-950
+        prose-pre:border
+        prose-pre:border-neutral-800
+      ">
+        <Content />
+      </div>
+
+      <!-- Footer -->
+      <footer class="mt-16 pt-8 border-t border-neutral-200 dark:border-neutral-800">
+        <div class="flex items-center justify-between">
+          <a 
+            href="/blog"
+            class="inline-flex items-center gap-2 text-sm text-neutral-600 hover:text-brand-500 dark:text-neutral-400 dark:hover:text-brand-400 transition-colors"
+          >
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Ver todos los posts
+          </a>
+        </div>
+      </footer>
+
+    </article>
+  </main>
+</BaseLayout>
