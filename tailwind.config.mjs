@@ -31,7 +31,7 @@ export default {
                 },
             },
             fontFamily: {
-                display: ['Inter', 'sans-serif'],  // Cambio aquí
+                display: ['Inter', 'sans-serif'],
                 sans: ['Inter', 'sans-serif'],
                 mono: ['JetBrains Mono', 'monospace'],
             },
