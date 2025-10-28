@@ -1,0 +1,103 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/layout/Header.astro";
+
+const stack = [
+    "React",
+    "TypeScript",
+    "Astro",
+    "Vite",
+    "Vitest",
+    "Playwright",
+    "Tailwind CSS",
+    "Jest",
+    "Cypress",
+    "Git",
+    "VS Code",
+];
+
+const links = {
+  email: "mailto:tucorreo@dominio.com",
+  github: "https://github.com/tuusuario",
+  linkedin: "https://www.linkedin.com/in/tuusuario/"
+};
+---
+
+<BaseLayout
+    title="About - Santiago Trigo"
+    description="Frontend Developer con 7+ años de experiencia en React, TypeScript y arquitecturas escalables."
+>
+    <Header />
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="max-w-3xl mx-auto">
+            <!-- Hero -->
+            <div class="mb-16">
+                <h1
+                    class="text-4xl md:text-5xl font-bold text-brand-500 dark:text-brand-400 mb-6"
+                >
+                    Hola, soy Santiago 👋
+                </h1>
+
+                <div class="prose prose-lg dark:prose-invert max-w-none">
+                    <p
+                        class="mt-4 text-lg leading-relaxed text-neutral-700 dark:text-neutral-200"
+                    >
+                        Desarrollador <strong>Frontend</strong> especializado en
+                        <strong>React</strong> y <strong>TypeScript</strong>. Me
+                        dedico a construir interfaces impecables y arquitecturas
+                        que escalan sin convertirse en una pesadilla de
+                        mantenimiento. He vivido la evolución del ecosistema
+                        desde jQuery hasta los <em>Server Components</em>—y sé
+                        cuándo adoptar y cuándo ser pragmático.
+                    </p>
+                </div>
+            </div>
+
+            <section aria-labelledby="stack" class="mb-12">
+                <h2 id="stack" class="text-2xl font-semibold">Tech Stack</h2>
+                <div class="mt-4 flex flex-wrap gap-2">
+                    {
+                        stack.map((tech) => (
+                            <span class="rounded-md border border-neutral-200 bg-neutral-50 px-3 py-1 text-sm text-neutral-700 dark:border-neutral-800 dark:bg-neutral-900/40 dark:text-neutral-300">
+                                {tech}
+                            </span>
+                        ))
+                    }
+                </div>
+            </section>
+
+            <section aria-labelledby="cta" class="mb-14">
+                <h2 id="cta" class="sr-only">Contacto</h2>
+                <div
+                    class="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm dark:border-neutral-800 dark:bg-neutral-900/40"
+                >
+                    <p class="text-lg text-neutral-800 dark:text-neutral-100">
+                        ¿Tienes un proyecto interesante o necesitas ayuda con
+                        arquitectura frontend y performance?
+                    </p>
+                    <div class="mt-4 flex flex-wrap gap-3">
+                        <a
+                            href={links.email}
+                            class="inline-flex items-center justify-center rounded-md bg-brand-600 px-4 py-2 text-white transition hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-400"
+                        >
+                            Enviar email
+                        </a>
+                        <a
+                            href={links.github}
+                            class="inline-flex items-center justify-center rounded-md border border-neutral-300 px-4 py-2 text-neutral-800 transition hover:bg-neutral-50 dark:border-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-800/60"
+                        >
+                            GitHub
+                        </a>
+                        <a
+                            href={links.linkedin}
+                            class="inline-flex items-center justify-center rounded-md border border-neutral-300 px-4 py-2 text-neutral-800 transition hover:bg-neutral-50 dark:border-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-800/60"
+                        >
+                            LinkedIn
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+</BaseLayout>
