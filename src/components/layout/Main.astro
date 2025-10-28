@@ -1,0 +1,67 @@
+---
+import Logo from "./Logo.astro";
+---
+
+<main class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+        class="flex min-h-[calc(100vh-4rem)] flex-col justify-center py-20"
+    >
+        <div class="max-w-3xl">
+            <div class="mb-6">
+                <Logo />
+            </div>
+
+            <!-- Nombre -->
+            <h1
+                class="mb-4 text-4xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 md:text-5xl"
+            >
+                Santiago Trigo
+            </h1>
+
+            <!-- Tagline -->
+            <p class="mb-6 text-xl text-neutral-600 dark:text-neutral-300">
+                Frontend Developer
+            </p>
+
+            <!-- Descripción -->
+            <p
+                class="mb-8 max-w-2xl text-lg text-neutral-600 dark:text-neutral-400"
+            >
+                Construyo interfaces web con atención al detalle y creatividad
+                técnica. Meticuloso, creativo, investigador.
+            </p>
+
+            <!-- Stack -->
+            <div
+                class="mb-10 flex flex-wrap gap-2 text-sm text-neutral-500 dark:text-neutral-500"
+            >
+                <span>React</span>
+                <span>•</span>
+                <span>TypeScript</span>
+                <span>•</span>
+                <span>Vite</span>
+                <span>•</span>
+                <span>7+ años</span>
+            </div>
+
+            <!-- CTAs -->
+            <div class="flex flex-wrap gap-4">
+                <a
+                    href="/projects"
+                    class="inline-flex items-center justify-center rounded-lg bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-600 dark:bg-brand-400 dark:text-neutral-900 dark:hover:bg-brand-300"
+                >
+                    Ver Proyectos
+                </a>
+
+                <a
+                    href="https://github.com/trigoporres"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center justify-center rounded-lg border border-neutral-300 bg-transparent px-6 py-3 text-sm font-semibold text-neutral-700 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800"
+                >
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
