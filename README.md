@@ -1,46 +1,86 @@
-# Astro Starter Kit: Basics
+# Santiago Trigo - Portfolio
 
-```sh
-npm create astro@latest -- --template basics
+Personal portfolio website for Santiago Trigo, Frontend Developer specializing in React, TypeScript, and web performance.
+
+## Tech Stack
+
+- **Framework**: [Astro](https://astro.build) 5.15+
+- **UI**: React 19.2+
+- **Styling**: Tailwind CSS 3.4+
+- **Content**: MDX for blog posts
+- **TypeScript**: Strict mode enabled
+- **Fonts**: Inter, Space Grotesk, JetBrains Mono
+
+## Features
+
+- 🌙 Dark mode with localStorage persistence
+- ⚡ Performance optimized (static site generation)
+- 📝 Blog with MDX support
+- 🎨 Custom design system with Tailwind
+- 📱 Responsive design
+- ♿ Accessibility (keyboard navigation, aria-labels)
+
+## Development
+
+### Prerequisites
+
+- Node.js 18+
+- npm or pnpm
+
+### Installation
+
+```bash
+npm install
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+### Commands
 
-## 🚀 Project Structure
+| Command            | Action                                       |
+| :----------------- | :------------------------------------------- |
+| `npm run dev`      | Start dev server at `localhost:4321`         |
+| `npm run build`    | Build production site to `./dist/`           |
+| `npm run preview`  | Preview production build locally             |
 
-Inside of your Astro project, you'll see the following folders and files:
+## Project Structure
 
-```text
+```
 /
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+├── public/             # Static assets
+├── src/
+│   ├── components/
+│   │   ├── layout/     # Layout components (Astro)
+│   │   └── react/      # Interactive components (React)
+│   ├── content/
+│   │   └── blog/       # Blog posts (MDX)
+│   ├── layouts/        # Page layouts
+│   ├── pages/          # Application routes
+│   └── styles/         # Global styles
+├── CLAUDE.md           # Claude Code guidance
+└── tailwind.config.mjs # Tailwind configuration
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Theme System
 
-## 🧞 Commands
+The project implements dark mode through:
 
-All commands are run from the root of the project, from a terminal:
+1. Inline script in [BaseLayout.astro](src/layouts/BaseLayout.astro) that prevents flash
+2. React component [ThemeToggle.tsx](src/components/react/ThemeToggle.tsx) for toggling
+3. Tailwind with `darkMode: 'class'`
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Deployment
 
-## 👀 Want to learn more?
+The site is optimized for deployment on platforms like:
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- [Vercel](https://vercel.com)
+- [Netlify](https://netlify.com)
+- [Cloudflare Pages](https://pages.cloudflare.com)
+
+```bash
+npm run build
+```
+
+The generated site will be in `./dist/`
+
+## License
+
+© 2025 Santiago Trigo. All rights reserved.
