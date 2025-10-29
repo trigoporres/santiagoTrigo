@@ -5,21 +5,22 @@ import Header from "../components/layout/Header.astro";
 const stack = [
     "React",
     "TypeScript",
-    "Astro",
     "Vite",
+    "Jest",
     "Vitest",
+    "Astro",
+    "Storybook",
     "Playwright",
     "Tailwind CSS",
-    "Jest",
     "Cypress",
     "Git",
     "VS Code",
 ];
 
 const links = {
-  email: "mailto:tucorreo@dominio.com",
-  github: "https://github.com/tuusuario",
-  linkedin: "https://www.linkedin.com/in/tuusuario/"
+    email: "mailto:santiagotrigoporres@gmail.com",
+    github: "https://github.com/trigoporres",
+    linkedin: "https://www.linkedin.com/in/santiagotrigoporres/",
 };
 ---
 
@@ -43,13 +44,18 @@ const links = {
                     <p
                         class="mt-4 text-lg leading-relaxed text-neutral-700 dark:text-neutral-200"
                     >
-                        Desarrollador <strong>Frontend</strong> especializado en
-                        <strong>React</strong> y <strong>TypeScript</strong>. Me
-                        dedico a construir interfaces impecables y arquitecturas
-                        que escalan sin convertirse en una pesadilla de
-                        mantenimiento. He vivido la evolución del ecosistema
-                        desde jQuery hasta los <em>Server Components</em>—y sé
-                        cuándo adoptar y cuándo ser pragmático.
+                        Desarrollador frontend senior especializado en ReactJS y
+                        TypeScript, con más de siete años de experiencia creando
+                        interfaces escalables y mantenibles. Combino ingeniería,
+                        diseño y estrategia para construir productos eficientes
+                        y coherentes.
+                    </p>
+                    <p
+                        class="mt-4 text-lg leading-relaxed text-neutral-700 dark:text-neutral-200"
+                    >
+                        Destaco por mi pensamiento estructurado, comunicación
+                        clara y mentalidad de aprendizaje continuo, actualmente
+                        explorando IA aplicada al desarrollo web.
                     </p>
                 </div>
             </div>
@@ -79,18 +85,21 @@ const links = {
                     <div class="mt-4 flex flex-wrap gap-3">
                         <a
                             href={links.email}
+                            target="_blank"
                             class="inline-flex items-center justify-center rounded-md bg-brand-600 px-4 py-2 text-white transition hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-400"
                         >
                             Enviar email
                         </a>
                         <a
                             href={links.github}
+                            target="_blank"
                             class="inline-flex items-center justify-center rounded-md border border-neutral-300 px-4 py-2 text-neutral-800 transition hover:bg-neutral-50 dark:border-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-800/60"
                         >
                             GitHub
                         </a>
                         <a
                             href={links.linkedin}
+                            target="_blank"
                             class="inline-flex items-center justify-center rounded-md border border-neutral-300 px-4 py-2 text-neutral-800 transition hover:bg-neutral-50 dark:border-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-800/60"
                         >
                             LinkedIn
