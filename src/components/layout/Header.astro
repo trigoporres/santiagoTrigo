@@ -43,9 +43,13 @@ const navItems = [
         <ThemeToggle client:load />
 
         <button
+          id="mobile-menu-button"
+          aria-label="Toggle mobile menu"
+          aria-expanded="false"
           class="p-2 text-neutral-600 hover:text-brand-500 dark:text-neutral-400 dark:hover:text-brand-400"
         >
           <svg
+            id="menu-open-icon"
             class="h-6 w-6"
             fill="none"
             viewBox="0 0 24 24"
@@ -57,8 +61,66 @@ const navItems = [
               stroke-width="2"
               d="M4 6h16M4 12h16M4 18h16"></path>
           </svg>
+          <svg
+            id="menu-close-icon"
+            class="h-6 w-6 hidden"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
         </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div
+      id="mobile-menu"
+      class="hidden md:hidden border-t border-neutral-200 dark:border-neutral-800"
+    >
+      <div class="space-y-1 px-4 pb-3 pt-2">
+        {
+          navItems.map((item) => (
+            <a
+              href={item.href}
+              class="block rounded-lg px-3 py-2 text-base font-medium text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-brand-500 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-brand-400"
+            >
+              {item.name}
+            </a>
+          ))
+        }
       </div>
     </div>
   </nav>
 </header>
+
+<script>
+  const button = document.getElementById('mobile-menu-button');
+  const menu = document.getElementById('mobile-menu');
+  const openIcon = document.getElementById('menu-open-icon');
+  const closeIcon = document.getElementById('menu-close-icon');
+
+  button?.addEventListener('click', () => {
+    const isExpanded = button.getAttribute('aria-expanded') === 'true';
+
+    button.setAttribute('aria-expanded', (!isExpanded).toString());
+    menu?.classList.toggle('hidden');
+    openIcon?.classList.toggle('hidden');
+    closeIcon?.classList.toggle('hidden');
+  });
+
+  // Close menu when clicking on a link
+  menu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      menu.classList.add('hidden');
+      openIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+      button?.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
