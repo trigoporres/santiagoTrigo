@@ -34,6 +34,11 @@ const { title, description = "Frontend Developer. React, TypeScript, Performance
         document.documentElement.classList.remove('dark');
       }
     </script>
+    <!-- Vercel Analytics -->
+    <script>
+      import { inject } from '@vercel/analytics';
+      inject();
+    </script>
   </head>
   <body>
     <slot />
