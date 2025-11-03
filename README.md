@@ -72,8 +72,6 @@ The project implements dark mode through:
 The site is optimized for deployment on platforms like:
 
 - [Vercel](https://vercel.com)
-- [Netlify](https://netlify.com)
-- [Cloudflare Pages](https://pages.cloudflare.com)
 
 ```bash
 npm run build
