@@ -4,7 +4,12 @@ interface Props {
   description?: string;
 }
 
-const { title, description = "Frontend Developer. React, TypeScript, Performance." } = Astro.props;
+const {
+  title,
+  description = "Frontend Developer. React, TypeScript, Performance.",
+} = Astro.props;
+
+import Footer from "../components/layout/Footer.astro";
 ---
 
 <!doctype html>
@@ -16,35 +21,50 @@ const { title, description = "Frontend Developer. React, TypeScript, Performance
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL("/og-image.png", Astro.url)} />
+
     <!-- Prevent theme flash -->
     <script is:inline>
       const theme = (() => {
-        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-          return localStorage.getItem('theme');
+        if (
+          typeof localStorage !== "undefined" &&
+          localStorage.getItem("theme")
+        ) {
+          return localStorage.getItem("theme");
         }
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          return 'dark';
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          return "dark";
         }
-        return 'light';
+        return "light";
       })();
-      
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
+
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
       } else {
-        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.remove("dark");
       }
     </script>
     <!-- Vercel Analytics -->
     <script>
-      import { inject } from '@vercel/analytics';
+      import { inject } from "@vercel/analytics";
       inject();
     </script>
   </head>
-  <body>
-    <slot />
+  <body
+    class="flex min-h-screen flex-col bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-50"
+  >
+    <div class="flex w-full flex-1 flex-col">
+      <slot />
+    </div>
+    <Footer />
   </body>
 </html>
 
 <style is:global>
-  @import '../styles/global.css';
+  @import "../styles/global.css";
 </style>

@@ -1,0 +1,40 @@
+---
+import Logo from "./Logo.astro";
+
+const currentYear = new Date().getFullYear();
+
+const socialLinks = [
+  { name: "GitHub", href: "https://github.com/trigoporres" },
+  { name: "LinkedIn", href: "https://linkedin.com/in/santiagotrigoporres" },
+];
+---
+
+<footer
+  class="border-t border-neutral-200 bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-900"
+>
+  <div class="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
+    <div class="flex flex-col items-center justify-between gap-6 md:flex-row">
+      <div class="flex items-center gap-2">
+        <Logo size="small" />
+        <span class="text-sm text-neutral-500 dark:text-neutral-400">
+          © {currentYear} Santiago Trigo
+        </span>
+      </div>
+
+      <div class="flex gap-6">
+        {
+          socialLinks.map((link) => (
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-sm text-neutral-500 transition-colors hover:text-brand-500 dark:text-neutral-400 dark:hover:text-brand-400"
+            >
+              {link.name}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</footer>
