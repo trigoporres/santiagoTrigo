@@ -1,6 +1,7 @@
 # Santiago Trigo - Portfolio
 
-Personal portfolio website for Santiago Trigo, Frontend Developer specializing in React, TypeScript, and web performance.
+Personal portfolio website for Santiago Trigo, Frontend Developer specializing
+in React, TypeScript, and web performance.
 
 ## Tech Stack
 
@@ -35,11 +36,11 @@ npm install
 
 ### Commands
 
-| Command            | Action                                       |
-| :----------------- | :------------------------------------------- |
-| `npm run dev`      | Start dev server at `localhost:4321`         |
-| `npm run build`    | Build production site to `./dist/`           |
-| `npm run preview`  | Preview production build locally             |
+| Command           | Action                               |
+| :---------------- | :----------------------------------- |
+| `npm run dev`     | Start dev server at `localhost:4321` |
+| `npm run build`   | Build production site to `./dist/`   |
+| `npm run preview` | Preview production build locally     |
 
 ## Project Structure
 
@@ -63,8 +64,10 @@ npm install
 
 The project implements dark mode through:
 
-1. Inline script in [BaseLayout.astro](src/layouts/BaseLayout.astro) that prevents flash
-2. React component [ThemeToggle.tsx](src/components/react/ThemeToggle.tsx) for toggling
+1. Inline script in [BaseLayout.astro](src/layouts/BaseLayout.astro) that
+   prevents flash
+2. React component [ThemeToggle.tsx](src/components/react/ThemeToggle.tsx) for
+   toggling
 3. Tailwind with `darkMode: 'class'`
 
 ## Deployment
