@@ -1,0 +1,149 @@
+---
+title: "Cómo automatizo la resolución de issues con OpenClaw y un agente de código"
+description:
+  "Un flujo donde abres un issue en GitHub y un agente de IA lo resuelve, crea
+  la rama, implementa los cambios y abre el PR. Así funciona mi setup con
+  OpenClaw y codeRoz."
+pubDate: 2026-03-08
+tags: ["openclaw", "automatización", "ia", "devtools", "workflow"]
+featured: true
+draft: false
+---
+
+Este post lo escribió un agente de IA. No como experimento, sino como parte de
+un flujo de trabajo real. Alguien abrió un issue en GitHub pidiendo este
+artículo, y el agente lo resolvió: leyó el issue, creó la rama, escribió el
+contenido, verificó que el build pasara y abrió el PR.
+
+Ese es el flujo que quiero contarte.
+
+## Qué es OpenClaw
+
+[OpenClaw](https://openclaw.io) es una plataforma que te permite crear y
+orquestar agentes de IA que interactúan con tus herramientas reales: terminal,
+sistema de archivos, navegador, APIs. No es un chatbot que genera texto — es un
+agente que ejecuta acciones.
+
+Lo que lo hace interesante:
+
+- **Acceso a herramientas reales.** Puede ejecutar comandos, leer y escribir
+  archivos, hacer peticiones HTTP, interactuar con un navegador.
+- **Agentes especializados.** Puedes definir varios agentes con personalidades y
+  capacidades distintas. Cada uno con su propio contexto y herramientas.
+- **Orquestación.** Un agente principal puede delegar tareas a sub-agentes
+  especializados cuando la tarea lo requiere.
+- **Canales de comunicación.** Los agentes se conectan a Telegram, Discord u
+  otros canales para recibir instrucciones y reportar resultados.
+
+## codeRoz: mi agente de código
+
+En mi setup tengo un agente llamado **codeRoz**. Es la "hermana programadora" —
+una agente especializada en tareas de desarrollo: escribir código, hacer commits,
+abrir PRs, ejecutar builds, depurar errores.
+
+Su configuración incluye:
+
+- **SOUL.md**: define su personalidad — directa, pragmática, responde en
+  español.
+- **TOOLS.md**: documenta las herramientas disponibles — repos, tokens, flujos
+  de trabajo.
+- **AGENTS.md**: instrucciones que sigue al inicio de cada sesión.
+
+Cuando le llega una tarea, codeRoz ya sabe dónde está el repo, qué convenciones
+sigue el proyecto, cómo crear ramas y cómo abrir PRs.
+
+## El flujo: de issue a PR sin intervención
+
+Este es el flujo completo que sigo:
+
+### 1. Abro un issue en GitHub
+
+Describo lo que necesito. Puede ser un bug, una feature, un post de blog —
+cualquier tarea concreta.
+
+```
+Issue #1: "nuevo post de blog"
+Crear un post para el blog hablando del flujo de trabajo
+con OpenClaw para trabajar en issues de manera automática.
+```
+
+### 2. Le pido al agente que lo resuelva
+
+Desde Telegram le digo algo como: _"Resuelve el issue #1 del repo
+santiagoTrigo"_. El agente principal puede delegar a codeRoz como sub-agente si
+la tarea es de código.
+
+### 3. El agente analiza el contexto
+
+codeRoz lee el repositorio: estructura del proyecto, posts existentes, esquemas
+de contenido, convenciones. No asume — se adapta al proyecto real.
+
+### 4. Implementa los cambios
+
+Crea la rama, escribe el código (o contenido), verifica que todo compile
+correctamente con `npm run build`.
+
+### 5. Commit, push y PR
+
+```bash
+git checkout -b blog/openclaw-workflow
+git add .
+git commit -m "feat: add blog post about OpenClaw workflow (closes #1)"
+git push origin blog/openclaw-workflow
+```
+
+Y abre un PR via la API de GitHub que referencia y cierra el issue original.
+
+### 6. Revisión humana
+
+El PR queda listo para revisión. Yo lo leo, apruebo o pido cambios. **El humano
+siempre tiene la última palabra.**
+
+## Por qué funciona
+
+**Reduce fricción.** La parte mecánica del flujo (crear rama, commit, push,
+abrir PR) desaparece. Te enfocas en definir qué quieres, no en cómo ejecutarlo.
+
+**Contexto persistente.** El agente conoce tu proyecto. No empiezas de cero cada
+vez — sabe dónde están los archivos, qué stack usas, qué convenciones sigues.
+
+**Trazabilidad.** Todo queda registrado: el issue original, la rama, el PR, los
+cambios. El flujo de Git no cambia, solo se automatiza quién lo ejecuta.
+
+**Iteración rápida.** Si algo no está bien en el PR, puedes pedir ajustes
+directamente. El agente puede hacer cambios adicionales sobre la misma rama.
+
+**Escalable.** El mismo flujo sirve para un post de blog, un bugfix, un
+refactor, o una feature completa. La complejidad la absorbe el agente.
+
+## Limitaciones honestas
+
+No es magia. Hay cosas que tener en cuenta:
+
+- **Tareas ambiguas.** Si el issue no está bien definido, el resultado tampoco
+  lo estará. Basura entra, basura sale.
+- **Revisión obligatoria.** No es recomendable mergear sin revisar. El agente es
+  bueno pero no infalible.
+- **Contexto limitado.** En proyectos muy grandes o con mucha lógica de negocio
+  implícita, el agente puede no captar todos los matices.
+- **Dependencia de herramientas.** Necesitas tener el entorno configurado:
+  tokens, repos clonados, permisos correctos.
+
+## El meta-momento
+
+Este post es la prueba de concepto. Si estás leyendo esto, significa que:
+
+1. Alguien abrió un issue pidiendo este artículo.
+2. Un agente de IA lo leyó, entendió qué hacer, escribió el post.
+3. Verificó que el build del sitio pasara.
+4. Creó el PR que cerró el issue.
+5. Santiago lo revisó y lo aprobó.
+
+El flujo funciona. No porque la IA sea perfecta, sino porque el sistema está
+diseñado para que cada paso sea verificable y reversible.
+
+---
+
+Si te interesa explorar OpenClaw, puedes encontrar más información en
+[openclaw.io](https://openclaw.io). Y si tienes preguntas sobre este setup,
+siempre puedes abrir un issue. Quién sabe, tal vez lo resuelva un agente.
