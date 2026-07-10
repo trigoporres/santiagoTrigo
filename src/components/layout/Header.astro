@@ -1,127 +1,134 @@
 ---
 import ThemeToggle from "../react/ThemeToggle";
-import Logo from "./Logo.astro";
 
 const navItems = [
-  { name: "Proyectos", href: "/projects" },
-  { name: "Blog", href: "/blog" },
-  { name: "Sobre mí", href: "/about" },
+  { name: "Proyectos", href: "#proyectos" },
+  { name: "Sobre mí", href: "#sobre-mi" },
 ];
 ---
 
 <header
-  class="sticky top-0 z-50 w-full border-b border-neutral-200 bg-neutral-50/80 backdrop-blur-sm dark:border-neutral-800 dark:bg-neutral-900/80"
+  class="sticky top-0 z-50 w-full bg-neutral-50/[.92] backdrop-blur-sm dark:bg-neutral-950/[.92] border-b border-neutral-200/50 dark:border-neutral-800/50"
 >
-  <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex h-16 items-center justify-between">
-      <!-- Logo -->
-      <a href="/" class="logo group">
-        <Logo
-          size="small"
-          class="transition-colors hover:text-brand-600 dark:hover:text-brand-300"
-        />
+  <div
+    class="mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-16 flex items-center justify-between h-[90px]"
+  >
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-3">
+      <div
+        class="w-11 h-11 bg-brand-500 rounded-[10px] flex items-center justify-center text-white font-extrabold text-[17px] leading-none flex-shrink-0"
+      >
+        ST
+      </div>
+      <span class="font-semibold text-sm text-neutral-900 dark:text-neutral-50"
+        >Santiago Trigo</span
+      >
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden md:flex items-center gap-9">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class="font-medium text-[15px] text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-50 transition-colors"
+          >
+            {item.name}
+          </a>
+        ))
+      }
+      <ThemeToggle client:load />
+      <a
+        href="mailto:santiagotrigoporres@gmail.com"
+        class="px-[22px] py-[11px] bg-neutral-900 text-white text-sm font-semibold rounded-full hover:bg-neutral-800 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-neutral-200 transition-colors"
+      >
+        Hablemos
       </a>
+    </nav>
 
-      <!-- Desktop Navigation -->
-      <div class="hidden md:flex md:items-center md:gap-8">
-        {
-          navItems.map((item) => (
-            <a
-              href={item.href}
-              class="text-sm font-medium text-neutral-600 transition-colors hover:text-brand-500 dark:text-neutral-400 dark:hover:text-brand-400"
-            >
-              {item.name}
-            </a>
-          ))
-        }
-
-        <!-- Theme Toggle -->
-        <ThemeToggle client:load />
-      </div>
-
-      <!-- Mobile: Theme toggle + menu button -->
-      <div class="flex md:hidden items-center gap-2">
-        <ThemeToggle client:load />
-
-        <button
-          id="mobile-menu-button"
-          aria-label="Toggle mobile menu"
-          aria-expanded="false"
-          class="p-2 text-neutral-600 hover:text-brand-500 dark:text-neutral-400 dark:hover:text-brand-400"
+    <!-- Mobile controls -->
+    <div class="flex md:hidden items-center gap-2">
+      <ThemeToggle client:load />
+      <button
+        id="mobile-menu-btn"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        class="p-2 text-neutral-700 dark:text-neutral-400"
+      >
+        <svg
+          id="menu-open"
+          class="w-6 h-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
         >
-          <svg
-            id="menu-open-icon"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
-          <svg
-            id="menu-close-icon"
-            class="h-6 w-6 hidden"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </button>
-      </div>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+        <svg
+          id="menu-close"
+          class="w-6 h-6 hidden"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
     </div>
+  </div>
 
-    <!-- Mobile Menu -->
-    <div
-      id="mobile-menu"
-      class="hidden md:hidden border-t border-neutral-200 dark:border-neutral-800"
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden border-t border-neutral-200 dark:border-neutral-800 px-4 pb-4 pt-2"
+  >
+    {
+      navItems.map((item) => (
+        <a
+          href={item.href}
+          class="block py-2.5 text-base font-medium text-neutral-700 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-50"
+        >
+          {item.name}
+        </a>
+      ))
+    }
+    <a
+      href="mailto:santi@trigo.dev"
+      class="inline-block mt-3 px-[22px] py-[11px] bg-neutral-900 text-white text-sm font-semibold rounded-full dark:bg-neutral-50 dark:text-neutral-900"
     >
-      <div class="space-y-1 px-4 pb-3 pt-2">
-        {
-          navItems.map((item) => (
-            <a
-              href={item.href}
-              class="block rounded-lg px-3 py-2 text-base font-medium text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-brand-500 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-brand-400"
-            >
-              {item.name}
-            </a>
-          ))
-        }
-      </div>
-    </div>
-  </nav>
+      Hablemos
+    </a>
+  </div>
 </header>
 
 <script>
-  const button = document.getElementById("mobile-menu-button");
+  const btn = document.getElementById("mobile-menu-btn");
   const menu = document.getElementById("mobile-menu");
-  const openIcon = document.getElementById("menu-open-icon");
-  const closeIcon = document.getElementById("menu-close-icon");
+  const openIcon = document.getElementById("menu-open");
+  const closeIcon = document.getElementById("menu-close");
 
-  button?.addEventListener("click", () => {
-    const isExpanded = button.getAttribute("aria-expanded") === "true";
-
-    button.setAttribute("aria-expanded", (!isExpanded).toString());
+  btn?.addEventListener("click", () => {
+    const expanded = btn.getAttribute("aria-expanded") === "true";
+    btn.setAttribute("aria-expanded", String(!expanded));
     menu?.classList.toggle("hidden");
     openIcon?.classList.toggle("hidden");
     closeIcon?.classList.toggle("hidden");
   });
 
-  // Close menu when clicking on a link
   menu?.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", () => {
       menu.classList.add("hidden");
       openIcon?.classList.remove("hidden");
       closeIcon?.classList.add("hidden");
-      button?.setAttribute("aria-expanded", "false");
+      btn?.setAttribute("aria-expanded", "false");
     });
   });
 </script>

@@ -1,0 +1,86 @@
+---
+const links = [
+  {
+    label: "santiagotrigoporres@gmail.com",
+    href: "mailto:santiagotrigoporres@gmail.com",
+    primary: true,
+    download: false,
+  },
+  {
+    label: "LinkedIn",
+    href: "https://linkedin.com/in/santiagotrigoporres",
+    primary: false,
+    download: false,
+  },
+  {
+    label: "GitHub",
+    href: "https://github.com/trigoporres",
+    primary: false,
+    download: false,
+  },
+  {
+    label: "CV",
+    href: "/cv-santiago-trigo.pdf",
+    primary: false,
+    download: true,
+  },
+];
+---
+
+<section class="px-4 sm:px-8 lg:px-16 pb-24">
+  <div class="mx-auto max-w-[1440px]">
+    <div
+      class="bg-white dark:bg-neutral-900 px-14 py-14 rounded-[24px] shadow-[0_2px_16px_rgba(0,0,0,.05)] dark:shadow-[0_2px_16px_rgba(0,0,0,.3)]"
+    >
+      <div class="flex items-center justify-between gap-8 mb-8">
+        <div>
+          <h2
+            class="m-0 mb-2.5 font-extrabold text-[32px] text-neutral-900 dark:text-neutral-50"
+          >
+            Disponible para nuevos retos
+          </h2>
+          <p
+            class="m-0 text-base leading-[1.5] text-neutral-600 dark:text-neutral-400"
+          >
+            Remoto o híbrido, empresas de producto en España.
+          </p>
+        </div>
+        <!-- Indicador de disponibilidad -->
+        <div
+          class="w-3.5 h-3.5 rounded-full bg-brand-500 flex-shrink-0"
+          aria-label="Disponible"
+        >
+        </div>
+      </div>
+
+      <div class="flex gap-3 flex-wrap">
+        {
+          links.map((link) =>
+            link.primary ? (
+              <a
+                href={link.href}
+                class="px-6 py-3.5 bg-neutral-900 text-white font-semibold text-sm rounded-full hover:bg-neutral-800 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-neutral-200 transition-colors"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <a
+                href={link.href}
+                target={link.href.startsWith("http") ? "_blank" : undefined}
+                rel={
+                  link.href.startsWith("http")
+                    ? "noopener noreferrer"
+                    : undefined
+                }
+                download={link.download || undefined}
+                class="px-6 py-3.5 border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 font-semibold text-sm rounded-full hover:border-neutral-400 dark:hover:border-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-50 transition-colors"
+              >
+                {link.label}
+              </a>
+            )
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>

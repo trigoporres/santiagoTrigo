@@ -6,7 +6,7 @@ interface Props {
 
 const {
   title,
-  description = "Frontend Developer. React, TypeScript, Performance.",
+  description = "Frontend Developer senior. React, TypeScript, Testing y visualización de datos.",
 } = Astro.props;
 
 import Footer from "../components/layout/Footer.astro";
@@ -17,24 +17,25 @@ import Footer from "../components/layout/Footer.astro";
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <title>{title}</title>
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={new URL("/og-image.png", Astro.url)} />
 
-    <!-- Prevent theme flash -->
     <script is:inline>
       const theme = (() => {
-        if (
-          typeof localStorage !== "undefined" &&
-          localStorage.getItem("theme")
-        ) {
+        if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
           return localStorage.getItem("theme");
         }
         if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
@@ -42,22 +43,14 @@ import Footer from "../components/layout/Footer.astro";
         }
         return "light";
       })();
-
-      if (theme === "dark") {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
+      document.documentElement.classList.toggle("dark", theme === "dark");
     </script>
-    <!-- Vercel Analytics -->
     <script>
       import { inject } from "@vercel/analytics";
       inject();
     </script>
   </head>
-  <body
-    class="flex min-h-screen flex-col bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-50"
-  >
+  <body class="flex min-h-screen flex-col bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-50">
     <div class="flex w-full flex-1 flex-col">
       <slot />
     </div>

@@ -1,40 +1,29 @@
 ---
-import Logo from "./Logo.astro";
-
 const currentYear = new Date().getFullYear();
 
-const socialLinks = [
-  { name: "GitHub", href: "https://github.com/trigoporres" },
+const links = [
   { name: "LinkedIn", href: "https://linkedin.com/in/santiagotrigoporres" },
+  { name: "GitHub", href: "https://github.com/trigoporres" },
+  { name: "santi@trigo.dev", href: "mailto:santi@trigo.dev" },
 ];
 ---
 
-<footer
-  class="border-t border-neutral-200 bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-900"
->
-  <div class="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
-    <div class="flex flex-col items-center justify-between gap-6 md:flex-row">
-      <div class="flex items-center gap-2">
-        <Logo size="small" />
-        <span class="text-sm text-neutral-500 dark:text-neutral-400">
-          © {currentYear} Santiago Trigo
-        </span>
-      </div>
-
-      <div class="flex gap-6">
-        {
-          socialLinks.map((link) => (
-            <a
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-sm text-neutral-500 transition-colors hover:text-brand-500 dark:text-neutral-400 dark:hover:text-brand-400"
-            >
-              {link.name}
-            </a>
-          ))
-        }
-      </div>
+<footer class="border-t border-neutral-200 dark:border-neutral-800">
+  <div class="mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-16 py-[30px] flex flex-col sm:flex-row items-center justify-between gap-4 font-medium text-[13px] text-neutral-500 dark:text-neutral-500">
+    <span>© {currentYear} Santiago Trigo</span>
+    <div class="flex gap-5">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            target={link.href.startsWith("http") ? "_blank" : undefined}
+            rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+            class="hover:text-neutral-900 dark:hover:text-neutral-50 transition-colors"
+          >
+            {link.name}
+          </a>
+        ))
+      }
     </div>
   </div>
 </footer>

@@ -1,0 +1,102 @@
+---
+interface Project {
+  category: string;
+  title: string;
+  description: string;
+  tags: string[];
+  initials: string;
+  links?: { label: string; href: string }[];
+}
+
+const projects: Project[] = [
+  {
+    category: "Visualización de datos",
+    title: "Librería de gráficos",
+    description:
+      "Capa de abstracción sobre Highcharts, ECharts, AG Grid y Google Maps que unifica 18 tipos de gráfico bajo una API React consistente. Transforma los datos de la plataforma al formato de cada proveedor, aplica theming centralizado y encapsula cada motor en un wrapper intercambiable.",
+    tags: ["TypeScript", "React", "Vite", "Vitest", "Cypress", "Storybook"],
+    initials: "LG",
+  },
+  {
+    category: "Sistema de diseño",
+    title: "Genesys UI",
+    description:
+      "Monorepo con 6 paquetes npm que forman el sistema de diseño de Devo. Componentes React/TypeScript para tablas de datos, editores de código, fecha-hora y color. Más de 200 releases publicadas y documentación viva en Storybook.",
+    tags: ["TypeScript", "React", "Storybook", "Vitest", "Monorepo"],
+    initials: "GU",
+    links: [
+      { label: "GitHub", href: "https://github.com/DevoInc/genesys-ui" },
+      { label: "Storybook", href: "https://devoinc.github.io/genesys-ui/" },
+    ],
+  },
+  {
+    category: "Componente React",
+    title: "Grid Layout",
+    description:
+      "Grid drag-and-drop construido desde cero para reemplazar react-grid-layout en los dashboards de Devo. Soporta redimensionado, breakpoints responsivos y está documentado en Storybook.",
+    tags: ["React", "TypeScript", "Storybook", "Vitest"],
+    initials: "GL",
+    links: [
+      { label: "GitHub", href: "https://github.com/DevoInc/grid-layout" },
+    ],
+  },
+];
+---
+
+<section id="proyectos" class="px-4 sm:px-8 lg:px-16 pb-24 scroll-mt-[90px]">
+  <div class="mx-auto max-w-[1440px]">
+    <div class="flex items-baseline justify-between mb-11">
+      <h2 class="m-0 font-bold text-[38px] text-neutral-900 dark:text-neutral-50">Proyectos</h2>
+      <span class="font-medium text-sm text-neutral-500 dark:text-neutral-500">Casos seleccionados</span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {
+        projects.map((project) => (
+          <article class="bg-white dark:bg-neutral-900 rounded-[24px] overflow-hidden shadow-[0_2px_16px_rgba(0,0,0,.05)] dark:shadow-[0_2px_16px_rgba(0,0,0,.3)]">
+            <div class="relative h-[260px] bg-brand-50 dark:bg-neutral-800 overflow-hidden flex items-center justify-center">
+              <span
+                class="font-extrabold text-[140px] leading-none tracking-[-0.04em] text-brand-100 dark:text-neutral-700 select-none pointer-events-none"
+                aria-hidden="true"
+              >
+                {project.initials}
+              </span>
+            </div>
+            <div class="p-8">
+              <p class="font-semibold text-xs text-brand-500 tracking-[0.05em] uppercase mb-3">
+                {project.category}
+              </p>
+              <h3 class="m-0 mb-3 font-bold text-[26px] text-neutral-900 dark:text-neutral-50">
+                {project.title}
+              </h3>
+              <p class="m-0 mb-5 text-base leading-[1.6] text-neutral-600 dark:text-neutral-400">
+                {project.description}
+              </p>
+              <div class="flex gap-2 flex-wrap mb-5">
+                {project.tags.map((tag) => (
+                  <span class="font-semibold text-xs text-neutral-600 dark:text-neutral-400 bg-neutral-100 dark:bg-neutral-800 px-3 py-[5px] rounded-full">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              {project.links && (
+                <div class="flex gap-3">
+                  {project.links.map((link) => (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="font-semibold text-sm text-brand-500 hover:text-brand-600 transition-colors"
+                    >
+                      {link.label} →
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
