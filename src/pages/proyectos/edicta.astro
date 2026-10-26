@@ -1,0 +1,194 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/layout/Header.astro";
+
+const services = [
+  {
+    name: "Cliente web",
+    role: "React y TypeScript. Solo conoce el contrato del backend-for-frontend, con nombres de petición de producto como documents.list o chat.stream.",
+  },
+  {
+    name: "Backend-for-frontend",
+    role: "TypeScript con NestJS. Autenticación, sesión, tenant y permisos. Traduce las peticiones del cliente a llamadas internas y normaliza respuestas y errores.",
+  },
+  {
+    name: "Ingesta",
+    role: "Python con FastAPI. Recibe documentos, extrae el texto, los resume, los trocea, genera embeddings y los indexa en la base vectorial.",
+  },
+  {
+    name: "Consulta RAG",
+    role: "Python con FastAPI. Prepara la pregunta, recupera los fragmentos relevantes y genera una respuesta con citas.",
+  },
+];
+
+const decisions = [
+  {
+    title: "Un backend-for-frontend como frontera",
+    text: "El cliente no sabe que existen los servicios de ingesta y consulta, ni sus URLs, ni sus formatos de error. Si uno cambia, solo cambia su adaptador en el backend-for-frontend. Es más código en el medio, a cambio de que cada pieza se pueda reemplazar sin arrastrar a las demás.",
+  },
+  {
+    title: "Ingesta y consulta como servicios separados",
+    text: "Indexar documentos es trabajo en segundo plano, lento y con estados (pendiente, procesando, indexado, error). Responder preguntas es interactivo y se hace en streaming. Tienen ritmos y fallos distintos, y separarlos evita que uno afecte al otro.",
+  },
+  {
+    title: "Recuperación con varias consultas",
+    text: "Antes de buscar, un modelo reformula la pregunta en varias variantes jurídicas y extrae filtros de metadatos, como el tipo de documento o el área del derecho. Los resultados de todas las búsquedas se fusionan conservando la mejor puntuación de cada fragmento. Si los filtros no devuelven nada, se repite la búsqueda sin ellos.",
+  },
+  {
+    title: "Aislamiento entre clientes",
+    text: "Cada consulta se filtra por tenant tanto en la base vectorial como en la base de datos relacional, con seguridad a nivel de fila. Un despacho nunca puede recuperar fragmentos de otro.",
+  },
+  {
+    title: "Un benchmark propio y determinista",
+    text: "Para saber si un cambio de modelo o de prompt mejora o empeora, hay un conjunto de preguntas con respuestas esperadas sobre documentos de prueba. La comprobación no usa un segundo modelo como juez, así que es repetible. Incluye preguntas cuya respuesta no está en los documentos, para verificar que el sistema no se inventa nada.",
+  },
+];
+---
+
+<BaseLayout
+  title="Edicta — Santiago Trigo"
+  description="Cómo diseñé Edicta, un asistente para abogados que responde sobre sus propios documentos con citas exactas y modelos open source."
+>
+  <Header />
+  <main class="flex-1 px-4 sm:px-8 lg:px-16 pt-12 pb-24">
+    <article class="mx-auto max-w-[820px]">
+      <a
+        href="/#proyectos"
+        class="inline-block mb-10 font-semibold text-sm text-brand-500 hover:text-brand-600 transition-colors"
+      >
+        ← Proyectos
+      </a>
+
+      <p class="font-semibold text-xs text-brand-500 tracking-[0.05em] uppercase mb-3">
+        Producto propio
+      </p>
+      <h1 class="m-0 mb-6 font-display font-bold text-[48px] leading-[1.1] text-neutral-900 dark:text-neutral-50">
+        Edicta
+      </h1>
+      <p class="m-0 mb-16 text-xl leading-[1.6] text-neutral-600 dark:text-neutral-400">
+        Un asistente para abogados que responde preguntas en lenguaje natural sobre sus propios
+        documentos, con citas exactas y modelos open source en infraestructura europea.
+      </p>
+
+      <section class="mb-16">
+        <h2 class="m-0 mb-5 font-display font-bold text-[30px] text-neutral-900 dark:text-neutral-50">
+          El problema
+        </h2>
+        <div class="space-y-4 text-base leading-[1.7] text-neutral-600 dark:text-neutral-400">
+          <p class="m-0">
+            Un abogado acumula años de contratos, sentencias, escrituras y poderes. Cuando necesita
+            algo concreto, lo busca a mano o con un buscador de palabras clave, que no entiende lo
+            que se le pregunta. Muchos despachos pequeños ni siquiera tienen una herramienta de
+            gestión documental.
+          </p>
+          <p class="m-0">
+            Un chat sobre esos documentos resuelve la búsqueda, pero choca con otra restricción: los
+            documentos de un cliente están sujetos a secreto profesional y a protección de datos.
+            Enviarlos a la API de un tercero no es una opción para mucha gente del sector.
+          </p>
+          <p class="m-0">
+            De ahí salen los dos requisitos que dirigen el diseño. Cada respuesta tiene que poder
+            comprobarse, con documento, página y fragmento. Y los documentos tienen que procesarse
+            con modelos open source, en servidores propios dentro de la UE.
+          </p>
+        </div>
+      </section>
+
+      <section class="mb-16">
+        <h2 class="m-0 mb-5 font-display font-bold text-[30px] text-neutral-900 dark:text-neutral-50">
+          La arquitectura
+        </h2>
+        <p class="m-0 mb-8 text-base leading-[1.7] text-neutral-600 dark:text-neutral-400">
+          Cuatro servicios con responsabilidades separadas. El cliente solo habla con el
+          backend-for-frontend, y este es el único que conoce los servicios internos.
+        </p>
+
+        <ol class="m-0 p-0 list-none space-y-3">
+          {
+            services.map((service, index) => (
+              <li class="relative">
+                <div class="rounded-[16px] bg-white dark:bg-neutral-900 p-6 shadow-[0_2px_16px_rgba(0,0,0,.05)] dark:shadow-[0_2px_16px_rgba(0,0,0,.3)]">
+                  <h3 class="m-0 mb-2 font-display font-bold text-lg text-neutral-900 dark:text-neutral-50">
+                    {service.name}
+                  </h3>
+                  <p class="m-0 text-base leading-[1.6] text-neutral-600 dark:text-neutral-400">
+                    {service.role}
+                  </p>
+                </div>
+                {index < 1 && (
+                  <p class="m-0 py-1 text-center text-brand-500" aria-hidden="true">
+                    ↓
+                  </p>
+                )}
+                {index === 1 && (
+                  <p class="m-0 py-1 text-center text-brand-500" aria-hidden="true">
+                    ↓ ↓
+                  </p>
+                )}
+              </li>
+            ))
+          }
+        </ol>
+
+        <p class="m-0 mt-8 text-base leading-[1.7] text-neutral-600 dark:text-neutral-400">
+          Debajo hay una base de datos relacional para metadatos y autenticación, una base vectorial
+          para los fragmentos y un runtime local de modelos para embeddings y generación. Todo se
+          levanta con Docker Compose.
+        </p>
+      </section>
+
+      <section class="mb-16">
+        <h2 class="m-0 mb-5 font-display font-bold text-[30px] text-neutral-900 dark:text-neutral-50">
+          Cómo responde una pregunta
+        </h2>
+        <ol class="m-0 pl-5 space-y-3 text-base leading-[1.7] text-neutral-600 dark:text-neutral-400">
+          <li>
+            <strong class="text-neutral-900 dark:text-neutral-50">Preparación.</strong> En paralelo, se
+            reformula la pregunta en varias variantes y se extraen filtros de metadatos.
+          </li>
+          <li>
+            <strong class="text-neutral-900 dark:text-neutral-50">Recuperación.</strong> Cada variante se
+            convierte en un embedding y se busca en la base vectorial, filtrando por cliente. Los
+            resultados se fusionan y se queda con los mejores fragmentos.
+          </li>
+          <li>
+            <strong class="text-neutral-900 dark:text-neutral-50">Generación.</strong> El modelo recibe los
+            fragmentos con su documento, página y sección, y responde citando sus fuentes. La
+            respuesta llega al cliente por streaming, con eventos de progreso por fase.
+          </li>
+        </ol>
+      </section>
+
+      <section class="mb-16">
+        <h2 class="m-0 mb-8 font-display font-bold text-[30px] text-neutral-900 dark:text-neutral-50">
+          Decisiones de diseño
+        </h2>
+        <div class="space-y-8">
+          {
+            decisions.map((decision) => (
+              <div>
+                <h3 class="m-0 mb-2 font-display font-bold text-xl text-neutral-900 dark:text-neutral-50">
+                  {decision.title}
+                </h3>
+                <p class="m-0 text-base leading-[1.7] text-neutral-600 dark:text-neutral-400">
+                  {decision.text}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <section>
+        <h2 class="m-0 mb-5 font-display font-bold text-[30px] text-neutral-900 dark:text-neutral-50">
+          Cómo lo he construido
+        </h2>
+        <p class="m-0 text-base leading-[1.7] text-neutral-600 dark:text-neutral-400">
+          Es un proyecto personal. La arquitectura, las reglas de separación entre servicios y el
+          cliente web son míos. El backend lo he desarrollado con asistentes de IA, usándolos como
+          herramienta de implementación y revisando y validando el resultado. El código es privado.
+        </p>
+      </section>
+    </article>
+  </main>
+</BaseLayout>

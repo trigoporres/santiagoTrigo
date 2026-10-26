@@ -47,6 +47,7 @@ const projects: Project[] = [
       "Asistente para abogados que responde preguntas sobre sus propios documentos con citas exactas, usando modelos open source en infraestructura europea. Definí la arquitectura en cuatro servicios (ingesta, consulta RAG, backend-for-frontend y cliente web) y las reglas de separación entre ellos, y planteé un benchmark para medir la calidad de las respuestas. El backend lo he construido con asistentes de IA, revisando y validando el resultado.",
     tags: ["TypeScript", "React", "Python", "RAG", "Qdrant", "Ollama"],
     initials: "ED",
+    links: [{ label: "Ver caso", href: "/proyectos/edicta" }],
   },
 ];
 ---
@@ -92,8 +93,8 @@ const projects: Project[] = [
                   {project.links.map((link) => (
                     <a
                       href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      target={link.href.startsWith("http") ? "_blank" : undefined}
+                      rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
                       class="font-semibold text-sm text-brand-500 hover:text-brand-600 transition-colors"
                     >
                       {link.label} →
