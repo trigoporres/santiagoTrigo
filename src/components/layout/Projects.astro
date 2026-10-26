@@ -3,6 +3,7 @@ interface Project {
   category: string;
   title: string;
   description: string;
+  role?: string;
   tags: string[];
   initials: string;
   links?: { label: string; href: string }[];
@@ -14,6 +15,7 @@ const projects: Project[] = [
     title: "Librería de gráficos",
     description:
       "Capa de abstracción sobre Highcharts, ECharts, AG Grid y Google Maps que unifica 18 tipos de gráfico bajo una API React consistente. Transforma los datos de la plataforma al formato de cada proveedor, aplica theming centralizado y encapsula cada motor en un wrapper intercambiable.",
+    role: "Entré en el proyecto cuando la librería era un monolito acoplado y sin tests, y participé en su rediseño hacia una arquitectura hexagonal con política de testing. Implementé la integración de Highcharts y AG Grid y de los gráficos propios en HTML, la transformación de datos y la configuración visual.",
     tags: ["TypeScript", "React", "Vite", "Vitest", "Cypress", "Storybook"],
     initials: "LG",
   },
@@ -22,6 +24,7 @@ const projects: Project[] = [
     title: "Genesys UI",
     description:
       "Monorepo con 6 paquetes npm que forman el sistema de diseño de Devo. Componentes React/TypeScript para tablas de datos, editores de código, fecha-hora y color. Más de 200 releases publicadas y documentación viva en Storybook.",
+    role: "Uno de los principales contribuyentes del paquete de tablas (más de 100 commits): ordenación, edición de celdas, presets de filas, paginación y accesibilidad. También el selector de rango de fechas y pruebas del resto del sistema.",
     tags: ["TypeScript", "React", "Storybook", "Vitest", "Monorepo"],
     initials: "GU",
     links: [
@@ -33,7 +36,8 @@ const projects: Project[] = [
     category: "Componente React",
     title: "Grid Layout",
     description:
-      "Grid drag-and-drop construido desde cero para reemplazar react-grid-layout en los dashboards de Devo. Soporta redimensionado, breakpoints responsivos y está documentado en Storybook.",
+      "Grid drag-and-drop desarrollado en pareja para reemplazar react-grid-layout en los dashboards de Devo. Soporta redimensionado, breakpoints responsivos y está documentado en Storybook.",
+    role: "Lo desarrollé en pair programming con un compañero, participando en todas las decisiones de API y de diseño.",
     tags: ["React", "TypeScript", "Storybook", "Vitest"],
     initials: "GL",
     links: [
@@ -78,9 +82,14 @@ const projects: Project[] = [
               <h3 class="m-0 mb-3 font-bold text-[26px] text-neutral-900 dark:text-neutral-50">
                 {project.title}
               </h3>
-              <p class="m-0 mb-5 text-base leading-[1.6] text-neutral-600 dark:text-neutral-400">
+              <p class={`m-0 text-base leading-[1.6] text-neutral-600 dark:text-neutral-400 ${project.role ? "mb-3" : "mb-5"}`}>
                 {project.description}
               </p>
+              {project.role && (
+                <p class="m-0 mb-5 text-base leading-[1.6] text-neutral-600 dark:text-neutral-400">
+                  <strong class="font-semibold text-neutral-900 dark:text-neutral-50">Mi rol:</strong> {project.role}
+                </p>
+              )}
               <div class="flex gap-2 flex-wrap mb-5">
                 {project.tags.map((tag) => (
                   <span class="font-semibold text-xs text-neutral-600 dark:text-neutral-400 bg-neutral-100 dark:bg-neutral-800 px-3 py-[5px] rounded-full">
