@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "santiago-trigo.vercel.app" }],
+      "destination": "https://santiagotrigo.dev/$1",
+      "permanent": true
+    }
+  ]
+}
